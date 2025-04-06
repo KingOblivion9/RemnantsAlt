@@ -415,6 +415,7 @@ namespace Remnants.World
 
         public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)
         {
+            Worldgen StructureConfig = Worldgen.Instance;
             int genIndex;
 
             //genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Settle Liquids"));
@@ -425,20 +426,18 @@ namespace Remnants.World
 
             #region terrain
             InsertPass(tasks, new Terrain("Terrain Improvement", 1), FindIndex(tasks, "Terrain") + 1);
+
             RemovePass(tasks, FindIndex(tasks, "Rocks In Dirt"));
             RemovePass(tasks, FindIndex(tasks, "Dirt In Rocks"));
             RemovePass(tasks, FindIndex(tasks, "Dirt To Mud"));
 
             RemovePass(tasks, FindIndex(tasks, "Silt"));
             RemovePass(tasks, FindIndex(tasks, "Slush"));
-
-            //InsertPass(tasks, FindIndex(tasks, "Caves") + 1, new Aquifers("Aquifers", 1));
             RemovePass(tasks, FindIndex(tasks, "Small Holes"));
             RemovePass(tasks, FindIndex(tasks, "Dirt Layer Caves"));
             RemovePass(tasks, FindIndex(tasks, "Rock Layer Caves"));
             RemovePass(tasks, FindIndex(tasks, "Surface Caves"));
 
-            //InsertPass(tasks, FindIndex(tasks, "Tunnels"), new TerrainFeatures("Terrain Features", 1), true);
             RemovePass(tasks, FindIndex(tasks, "Tunnels"));
 
             RemovePass(tasks, FindIndex(tasks, "Mount Caves"));
@@ -451,17 +450,11 @@ namespace Remnants.World
                 InsertPass(tasks, new Ores("Minerals", 1), FindIndex(tasks, "Dungeon") + 1);
             }
 
-            //InsertPass(tasks, FindIndex(tasks, "Gems"), new Ores("Ores", 1));
-            //InsertPass(tasks, new Boulders("Boulders", 1), FindIndex(tasks, "Gems"));
             RemovePass(tasks, FindIndex(tasks, "Surface Ore and Stone"));
-            //InsertPass(tasks, FindIndex(tasks, "Surface Ore and Stone"), new Boulders("Boulders", 1), true);
 
             RemovePass(tasks, FindIndex(tasks, "Spreading Grass"));
 
-            //InsertPass(tasks, FindIndex(tasks, "Clean Up Dirt") + 1, new DesertRocks("Desert Rocks", 1));
-
             RemovePass(tasks, FindIndex(tasks, "Clay"));
-            //InsertPass(tasks, FindIndex(tasks, "Planting Trees"), new Clay("Clay", 1));
 
             if (ModContent.GetInstance<Worldgen>().CloudDensity > 0)
             {
@@ -519,13 +512,21 @@ namespace Remnants.World
 
             InsertPass(tasks, new Pyramid("Pyramid", 100), FindIndex(tasks, "Pyramids"), true);
 
-            InsertPass(tasks, new TheDungeon("Dungeon", 100), FindIndex(tasks, "Dungeon"), true);
+            if (StructureConfig.DoNewDungeon)
+            {
+              InsertPass(tasks, new TheDungeon("Dungeon", 100), FindIndex(tasks, "Dungeon"), true);
+            }
             genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Dungeon"));
             if (genIndex != -1)
             {
                 InsertPass(tasks, new FloatingIslands("Sky Islands", 1), genIndex + 1);
                 InsertPass(tasks, new AerialGarden("Aerial Garden", 100), genIndex + 1);
                 InsertPass(tasks, new Undergrowth("Undergrowth", 100), genIndex + 1);
+                if (!StructureConfig.DoLivingTrees)
+                {
+                    RemovePass(tasks, FindIndex(tasks, "Living Trees"));
+                    RemovePass(tasks, FindIndex(tasks, "Wood Tree Walls"));
+                }
                 InsertPass(tasks, new ForgottenTomb("Forgotten Tomb", 100), genIndex + 1);
 
                 if (ModContent.GetInstance<Worldgen>().ExperimentalWorldgen)
@@ -539,30 +540,22 @@ namespace Remnants.World
                 InsertPass(tasks, new Labyrinth("Echoing Halls", 0), genIndex + 1);
             }
 
-            InsertPass(tasks, new JungleTemple("Jungle Pyramid", 100), FindIndex(tasks, "Jungle Temple"), true);
-            RemovePass(tasks, FindIndex(tasks, "Temple"));
-            RemovePass(tasks, FindIndex(tasks, "Altars"));
+            if (StructureConfig.DoNewTemple)
+            {
+                InsertPass(tasks, new JungleTemple("Jungle Pyramid", 100), FindIndex(tasks, "Jungle Temple"), true);
+                RemovePass(tasks, FindIndex(tasks, "Temple"));
+                RemovePass(tasks, FindIndex(tasks, "Altars"));
+            }
 
             genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Smooth World"));
             if (genIndex != -1)
             {
                 InsertPass(tasks, new ThermalRigs("Thermal Engines", 0), genIndex + 1);
-                InsertPass(tasks, new Microdungeons("Microdungeons", 0), genIndex);
                 InsertPass(tasks, new IceTemples("Ice Temples", 0), genIndex);
-                //tasks.Insert(genIndex, new JungleFortresses("REM-MD: Jungle Fortresses", 0));
-                //tasks.Insert(genIndex, new TreasureVaults("Treasure Vaults", 0));
-                //tasks.Insert(genIndex, new HoneyShrines("Honey Sanctums", 0));
+                InsertPass(tasks, new Microdungeons("Microdungeons", 0), genIndex);
             }
 
-            //genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Quick Cleanup"));
-            //if (genIndex != -1)
-            //{
-            //    InsertPass(tasks, new Observatories("Observatories", 0), genIndex + 1);
-            //}
-
             InsertPass(tasks, new Mineshafts("Mineshafts", 1), FindIndex(tasks, "Living Trees") + 1);
-            RemovePass(tasks, FindIndex(tasks, "Living Trees"));
-            RemovePass(tasks, FindIndex(tasks, "Wood Tree Walls"));
 
             if (!ModContent.GetInstance<Worldgen>().ExperimentalWorldgen)
             {
@@ -589,18 +582,11 @@ namespace Remnants.World
             #endregion
 
             InsertPass(tasks, new BoulderTraps("Boulder Traps", 1), FindIndex(tasks, "Traps"), true);
-            //RemovePass(tasks, FindIndex(tasks, "Traps"));
 
             InsertPass(tasks, new SpawnPointFix("Spawn Point Fix", 1), FindIndex(tasks, "Spawn Point") + 1);
 
             InsertPass(tasks, new WorldCleanup("Finishing Touches", 1), FindIndex(tasks, "Final Cleanup") + 1);
 
-            ////genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Granite"));
-            ////RemovePass(tasks, genIndex);
-            ///
-
-
-            //RemovePass(tasks, FindIndex(tasks, "Random Gems"));
 
             RemovePass(tasks, FindIndex(tasks, "Gravitating Sand"));
             RemovePass(tasks, FindIndex(tasks, "Shell Piles"));
@@ -618,10 +604,7 @@ namespace Remnants.World
                 }
 
                 RemovePass(tasks, FindIndex(tasks, "Giant Hive"));
-                //if (!ModContent.GetInstance<Client>().ExperimentalWorldgen)
-                //{
-                //    RemovePass(tasks, FindIndex(tasks, "Vernal Pass"));
-                //}
+
                 RemovePass(tasks, FindIndex(tasks, "Evil Island"));
 
                 RemovePass(tasks, FindIndex(tasks, "Gem Depth Adjustment"));
@@ -631,11 +614,16 @@ namespace Remnants.World
 
             RemovePass(tasks, FindIndex(tasks, "PlentifulOres"), true);
 
+            if (!StructureConfig.SkySafeguard)
+            {
+                RemovePass(tasks, FindIndex(tasks, "Settle Liquids"));
+                RemovePass(tasks, FindIndex(tasks, "Settle Liquids Again"));
+            }
+
             if (ModLoader.TryGetMod("FargowiltasSouls", out Mod far))
             {
                 RemovePass(tasks, FindIndex(tasks, "GuaranteePyramid"));
                 RemovePass(tasks, FindIndex(tasks, "GuaranteePyramidAgain"));
-                RemovePass(tasks, FindIndex(tasks, "CursedCoffinArena"));
             }
 
             if (ModLoader.TryGetMod("AdvancedWorldGen", out Mod awg))
@@ -664,6 +652,12 @@ namespace Remnants.World
                 RemovePass(tasks, FindIndex(tasks, "Post Terrain"), true);
             }
 
+            if (ModLoader.TryGetMod("Consolaria", out Mod Console))
+            {
+                RemovePass(tasks, FindIndex(tasks, "Jungle Sanctum"), true);
+                RemovePass(tasks, FindIndex(tasks, "Heart Shrine"), true);
+            }
+
             if (ModContent.GetInstance<Worldgen>().Safeguard)
             {
                 InsertPass(tasks, new Safeguard("Safeguard", 1), 1);
@@ -680,8 +674,6 @@ namespace Remnants.World
             {
                 tasks.Insert(index, item);
             }
-
-            item.Name = "[R] " + item.Name;
         }
 
         public static void RemovePass(List<GenPass> tasks, int index, bool destroy = false)
@@ -1404,8 +1396,25 @@ namespace Remnants.World
         {
             BiomeMap biomes = ModContent.GetInstance<BiomeMap>();
 
-            Main.worldSurface = (int)(Main.maxTilesY / 3f / 6) * 6;
-            Main.rockLayer = (int)(Main.maxTilesY / 2.25f / 6) * 6;
+            Worldgen SkyChange = Worldgen.Instance;
+
+            int SurfaceChange = SkyChange.FlatSurfaceRatioIncrease;
+            int UndergroundChange = SkyChange.FlatUndergroundRatioIncrease;
+            int LavaChange = SkyChange.FlatLavaRatioIncrease;
+
+            BiomeMap biomemap = ModContent.GetInstance<BiomeMap>();
+
+            if (SkyChange.SkySafeguard)
+            {
+                Main.worldSurface = (int)(Main.maxTilesY / 3f / 6) * 6;
+                Main.rockLayer = (int)(Main.maxTilesY / 2.25f / 6) * 6;
+            }
+            else
+            {
+                Main.worldSurface += SurfaceChange;
+                Main.rockLayer += UndergroundChange;
+                GenVars.lavaLine += LavaChange;
+            }
             //GenVars.lavaLine = (int)((Main.maxTilesY * 0.75f) / 6) * 6;
 
             //if (ModContent.GetInstance<Client>().LargerSky)
@@ -1439,7 +1448,7 @@ namespace Remnants.World
             roughness.SetFractalType(FastNoiseLite.FractalType.FBm);
             roughness.SetFractalOctaves(5);
 
-            for (float y = MathHelper.Clamp(Minimum - (Maximum - Minimum) / 2, 0, (int)Main.worldSurface * 0.35f); y <= Main.maxTilesY - 200; y++)
+            for (float y = MathHelper.Clamp(Minimum - (Maximum - Minimum) / 2, 0, (int)Main.worldSurface * 0.15f); y <= Main.maxTilesY - 200; y++)
             {
                 progress.Set(y / (Main.maxTilesY - 200));
 
@@ -2561,6 +2570,7 @@ namespace Remnants.World
 
         protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration)
         {
+            Worldgen StructureConfig = Worldgen.Instance;
             BiomeMap biomes = ModContent.GetInstance<BiomeMap>();
 
             progress.Message = "Finishing touches";
@@ -2901,89 +2911,25 @@ namespace Remnants.World
                     }
                     else if (biomes.FindBiome(x, y) == BiomeID.Glowshroom || biomes.FindBiome(x, y) == BiomeID.Desert || biomes.FindBiome(x, y) == BiomeID.SunkenSea || biomes.FindBiome(x, y) == BiomeID.Marble || biomes.FindBiome(x, y) == BiomeID.Granite || biomes.FindBiome(x, y) == BiomeID.Corruption || biomes.FindBiome(x, y) == BiomeID.Crimson || biomes.FindBiome(x, y) == BiomeID.Beach && y < Main.worldSurface + 50)
                     {
-                        tile.LiquidType = 0;
-                        if (tile.TileType == TileID.Cobweb || tile.TileType == TileID.Obsidian)
+                        if (y >= Main.worldSurface)
                         {
-                            tile.HasTile = false;
-                            if (tile.TileType == TileID.Obsidian)
+                            tile.LiquidType = 0;
+                            if (tile.TileType == TileID.Cobweb || tile.TileType == TileID.Obsidian)
                             {
-                                tile.LiquidAmount = 255;
+                                tile.HasTile = false;
+                                if (tile.TileType == TileID.Obsidian)
+                                {
+                                    tile.LiquidAmount = 255;
+                                }
+                            }
+                            if (tile.TileType == TileID.LavaDrip)
+                            {
+                                tile.TileType = TileID.WaterDrip;
                             }
                         }
-                        if (tile.TileType == TileID.LavaDrip)
-                        {
-                            tile.TileType = TileID.WaterDrip;
-                        }
-                    }
-                    //    if (!tile.HasTile)
-                    //    {
-                    //        if (WorldGen.genRand.NextBool(20) && RemTile.SolidBottom(x, y - 1))
-                    //        {
-                    //            WorldGen.PlaceTile(x, y, TileID.DyePlants, style: 7);
-                    //        }
-                    //        else if (WorldGen.genRand.NextBool(4) && RemTile.SolidTop(x, y + 1) && RemTile.SolidTop(x + 1, y + 1) && !WGTools.GetTile(x + 1, y).HasTile)
-                    //        {
-                    //            WGTools.MediumPile(x, y, Main.rand.Next(6, 16));
-                    //        }
-                    //        else if (WorldGen.genRand.NextBool(2) && RemTile.SolidTop(x, y + 1) && !tile.HasTile)
-                    //        {
-                    //            RemTile.SmallPile(x, y, Main.rand.Next(12, 28));
-                    //        }
-                    //    }
-                    //}
-                    //if (biomes.FindBiome(x, y, false) == BiomeID.Glowshroom)
-                    //{
-                    //    if (WorldGen.genRand.NextBool(2) && RemTile.SolidTop(x, y + 1) && (WGTools.GetTile(x, y + 1).type == ModContent.TileType<mudstone>() || WGTools.GetTile(x, y + 1).type == TileID.Silt))
-                    //    {
-                    //        if (WorldGen.genRand.NextBool(2))
-                    //        {
-                    //            WorldGen.PlaceTile(x, y, TileID.DyePlants);
-                    //        }
-                    //        else WorldGen.PlaceTile(x, y, TileID.DyePlants, style: 1);
-                    //    }
-                    //}
-
-                }
-            }
-
-            #region lihzahrdaltar
-            for (int x = 0; x <= 2; x++)
-            {
-                WGTools.Tile(GenVars.lAltarX + x, GenVars.lAltarY + 1).HasTile = true;
-                WGTools.Tile(GenVars.lAltarX + x, GenVars.lAltarY + 1).TileType = TileID.LihzahrdBrick;
-
-                for (int y = 0; y <= 1; y++)
-                {
-                    //WorldGen.KillTile(GenVars.lAltarX + x, GenVars.lAltarY + y);
-                    Tile tile = WGTools.Tile(GenVars.lAltarX + x, GenVars.lAltarY + y);
-
-                    tile.HasTile = true;
-                    tile.TileType = TileID.LihzahrdAltar;
-                    tile.TileFrameX = (short)(x * 18);
-                    tile.TileFrameY = (short)(y * 18);
-                }
-            }
-            WorldGen.KillTile(GenVars.lAltarX - 1, GenVars.lAltarY + 1);
-            WorldGen.PlaceTile(GenVars.lAltarX - 1, GenVars.lAltarY + 2, TileID.LihzahrdBrick);
-            WorldGen.PlaceTile(GenVars.lAltarX - 1, GenVars.lAltarY + 1, TileID.Torches, style: 6);
-            WorldGen.KillTile(GenVars.lAltarX + 3, GenVars.lAltarY + 1);
-            WorldGen.PlaceTile(GenVars.lAltarX + 3, GenVars.lAltarY + 2, TileID.LihzahrdBrick);
-            WorldGen.PlaceTile(GenVars.lAltarX + 3, GenVars.lAltarY + 1, TileID.Torches, style: 6);
-
-            if (ModLoader.TryGetMod("CalamityMod", out Mod cal))
-            {
-                for (int y = GenVars.lAltarY - 58; y <= GenVars.lAltarY + 2; y++)
-                {
-                    for (int x = GenVars.lAltarX - 78; x <= GenVars.lAltarX + 80; x++)
-                    {
-                        if (Main.tile[x, y].WallType == ModContent.WallType<temple>())
-                        {
-                            Main.tile[x, y].WallType = WallID.LihzahrdBrickUnsafe;
-                        }
                     }
                 }
             }
-            #endregion
 
             for (int y = (int)Main.worldSurface - 40; y < Main.maxTilesY - 200; y++)
             {

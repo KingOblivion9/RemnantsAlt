@@ -153,6 +153,13 @@ Mods: {
 			}
 
 			PrismbudHead.MapEntry: Pryzmik
+			// CloudyMusicBoxTile.MapEntry: Cloudy Music Box Tile
+			// EchoingMusicBoxTile.MapEntry: Echoing Music Box Tile
+			// ForgottenMusicBoxTile.MapEntry: Forgotten Music Box Tile
+			// GraniteMusicBoxTile.MapEntry: Granite Music Box Tile
+			// MagicalMusicBoxTile.MapEntry: Magical Music Box Tile
+			// MarbleMusicBoxTile.MapEntry: Marble Music Box Tile
+			// RootCoveredMusicBoxTile.MapEntry: Root Covered Music Box Tile
 		}
 
 		Buffs: {
@@ -389,6 +396,11 @@ Mods: {
 			TombBrickWall: {
 				DisplayName: Ściana Grobowca
 				Tooltip: ""
+			}
+
+			Tomb: {
+				// DisplayName: Paralax Tomb Wall
+				// Tooltip: ""
 			}
 
 			EnchantedBrickWall: {
@@ -653,6 +665,121 @@ Mods: {
 				DisplayName: Ikona Runicznego Błogosławieństwa
 				Tooltip: ""
 			}
+
+			LihzardPara: {
+				// DisplayName: Paralax Lihzahrd Brick Wall
+				// Tooltip: ""
+			}
+
+			Magic: {
+				// DisplayName: Paralax Magic Brick Wall
+				// Tooltip: ""
+			}
+
+			MazePara: {
+				// DisplayName: Paralax Maze Brick Wall
+				// Tooltip: ""
+			}
+
+			ParaHive: {
+				// DisplayName: Paralax Hive Wall
+				// Tooltip: ""
+			}
+
+			ParalaxDungeonB: {
+				// DisplayName: Paralax Blue Dungeon Wall
+				// Tooltip: ""
+			}
+
+			ParalaxDungeonG: {
+				// DisplayName: Paralax Green Dungeon Wall
+				// Tooltip: ""
+			}
+
+			ParalaxDungeonP: {
+				// DisplayName: Paralax Pink Dungeon Wall
+				// Tooltip: ""
+			}
+
+			PyramidPara: {
+				// DisplayName: Paralax Pyramid Brick Wall
+				// Tooltip: ""
+			}
+
+			StrongholdPara: {
+				// DisplayName: Paralax Stronghold Wall
+				// Tooltip: ""
+			}
+
+			TreePara: {
+				// DisplayName: Paralax Undergrowth Wall
+				// Tooltip: ""
+			}
+
+			VaultPara: {
+				// DisplayName: Paralax Vault Wall
+				// Tooltip: ""
+			}
+
+			WaterPara: {
+				// DisplayName: Paralax Water Brick Wall
+				// Tooltip: ""
+			}
+
+			MagicFly: {
+				// DisplayName: Magic Lab Elevator
+				// Tooltip: ""
+			}
+
+			LabFly: {
+				// DisplayName: Magic Lab Elevator
+				// Tooltip: ""
+			}
+
+			LabPara: {
+				// DisplayName: Paralax Magic Lab Wall
+				// Tooltip: ""
+			}
+
+			TemplePara: {
+				// DisplayName: Paralax Temple Brick Wall
+				// Tooltip: ""
+			}
+
+			CloudyMusicBox: {
+				// DisplayName: Cloudy Music Box
+				// Tooltip: ""
+			}
+
+			EchoingMusicBox: {
+				// DisplayName: Echoing Music Box
+				// Tooltip: ""
+			}
+
+			ForgottenMusicBox: {
+				// DisplayName: Forgotten Music Box
+				// Tooltip: ""
+			}
+
+			GraniteMusicBox: {
+				// DisplayName: Granite Music Box
+				// Tooltip: ""
+			}
+
+			MagicalMusicBox: {
+				// DisplayName: Magical Music Box
+				// Tooltip: ""
+			}
+
+			MarbleMusicBox: {
+				// DisplayName: Marble Music Box
+				// Tooltip: ""
+			}
+
+			RootCoveredMusicBox: {
+				// DisplayName: Root Covered Music Box
+				// Tooltip: ""
+			}
 		}
 
 		NPCs: {
@@ -707,8 +834,10 @@ Mods: {
 				Headers: {
 					// General: General
 					// Terrain: Terrain
-					// Structures: Structures
-					// Structure: Structure Header
+					// Structure: Structure
+					// CalamityCompatability: Calamity Compatability
+					// StructureChanges: Structure Changes
+					// LargerSky: Sky Size Increase
 				}
 
 				TerrainAmplitude: {
@@ -739,11 +868,6 @@ Mods: {
 
 						Uwaga: TYLKO W CELACH TESTOWYCH – NIGDY NIE UŻYWAJ TEGO DO NORMALNEJ GRY
 						'''
-				}
-
-				LargerSky: {
-					Label: Wyższe Niebo
-					Tooltip: ""
 				}
 
 				IceMountain: {
@@ -784,6 +908,60 @@ Mods: {
 				RailroadFrequency: {
 					// Label: "[i:2340] Railroad Frequency"
 					// Tooltip: Controls the number of railroads generated in new worlds
+				}
+
+				DoLava: {
+					// Label: "[i:1518] Liquid Varient"
+					/* Tooltip:
+						'''
+						If On, will use lava and obsidian
+						If Off, will use shimmer and atherium
+						''' */
+				}
+
+				AltPlanetoids: {
+					// Label: "[i:2767] Alt Planetoids"
+					// Tooltip: Enable Meteorite Planetoids?
+				}
+
+				DoNewTemple: {
+					// Label: "[i:899] Enable Jungle Temple Changes"
+					// Tooltip: ""
+				}
+
+				DoNewDungeon: {
+					// Label: "[i:1376] Enable Dungeon Changes"
+					/* Tooltip:
+						'''
+						The vanilla dungeon may cause issues with the maze
+						Pray it generates okay
+						Best used on XL worlds
+						''' */
+				}
+
+				DoLivingTrees: {
+					// Label: "[i:747] Do Living Trees"
+					// Tooltip: Spawn Living Trees?
+				}
+
+				SkySafeguard: {
+					// Label: "[i:156] World Ratio Safeguard"
+					// Tooltip: Keeps everything working right, do not report errors if you turn this off
+				}
+
+				FlatSurfaceRatioIncrease: {
+					// Label: "[i:2] Surface Increase"
+					// Tooltip: How many blocks lower than normal should the surface be?
+				}
+
+				FlatUndergroundRatioIncrease: {
+					// Label: "[i:3] Underground Increase"
+					// Tooltip: How many blocks lower than normal should the underground be?
+				}
+
+				FlatLavaRatioIncrease: {
+					// Label: "[i:173] Lava Layer Increase"
+					// Tooltip: How many blocks lower than normal should the lava layer be?
 				}
 			}
 

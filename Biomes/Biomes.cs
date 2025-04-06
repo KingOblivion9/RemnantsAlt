@@ -17,7 +17,7 @@ namespace Remnants.Biomes
 {
     public class Hive : ModBiome
 	{
-		public override int Music => MusicID.JungleUnderground;// MusicLoader.GetMusicSlot(Mod, "Sounds/Music/ambient_reformed");
+		public override int Music => MusicID.JungleUnderground;
 
 		public override ModUndergroundBackgroundStyle UndergroundBackgroundStyle => ModContent.GetInstance<honeycomb>();
 
@@ -28,35 +28,6 @@ namespace Remnants.Biomes
 		public override string BestiaryIcon => "Remnants/Biomes/HiveIcon";
 		public override string BackgroundPath => "Terraria/Images/MapBG16";
 		public override Color? BackgroundColor => base.BackgroundColor;
-
-		public override void SetStaticDefaults()
-		{
-			// DisplayName.SetDefault("The Hive");
-		}
-
-		//public override void OnEnter(Player player)
-		//{
-		//	if (ModLoader.TryGetMod("RemnantsMusic", out Mod musicMod))
-		//	{
-		//		music = MusicLoader.GetMusicSlot(musicMod, "Sounds/Music/ambient_reformed");
-		//	}
-		//	else music = MusicID.JungleUnderground;
-
-		//	//ambienceTimer = 0;
-		//}
-
-		//SoundStyle ambience = new SoundStyle("Remnants/Sounds/ambience/shoggoth_drone", SoundType.Ambient) with { Volume = 0.25f, IsLooped = true, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew, MaxInstances = 1 };
-		//ReLogic.Utilities.SlotId ambienceSlot;
-
-		//public override void OnInBiome(Player player)
-		//{
-		//	ambienceSlot = SoundEngine.PlaySound(ambience);
-		//}
-
-		//public override void OnLeave(Player player)
-		//{
-		//	SoundEngine.StopTrackedSounds();
-		//}
 
 		public override bool IsBiomeActive(Player player)
 		{
@@ -81,7 +52,7 @@ namespace Remnants.Biomes
 		int music = -1;
 		public override void OnEnter(Player player)
 		{
-			music = ModContent.GetInstance<Gameplay>().CustomMusic ? MusicLoader.GetMusicSlot(Mod, "Sounds/Music/music_dark_fog") : -1;
+			music = ModContent.GetInstance<Gameplay>().CustomMusic ? MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Marble") : -1;
 		}
 
         public override void OnInBiome(Player player)
@@ -114,7 +85,7 @@ namespace Remnants.Biomes
 		int music = -1;
 		public override void OnEnter(Player player)
 		{
-			music = ModContent.GetInstance<Gameplay>().CustomMusic ? MusicLoader.GetMusicSlot(Mod, "Sounds/Music/music_dark_somethingominous") : -1;
+			music = ModContent.GetInstance<Gameplay>().CustomMusic ? MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Granite") : -1;
 		}
 
 		public override void OnInBiome(Player player)
@@ -187,8 +158,6 @@ namespace Remnants.Biomes
 	{
 		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
 
-		public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/WBA Free Track - Drifter");
-
 		public override string BestiaryIcon => "Remnants/Biomes/VaultIcon";
 		public override string BackgroundPath => base.BackgroundPath;
 		public override Color? BackgroundColor => base.BackgroundColor;
@@ -232,7 +201,7 @@ namespace Remnants.Biomes
 		int music = -1;
 		public override void OnEnter(Player player)
 		{
-			music = ModContent.GetInstance<Gameplay>().CustomMusic ? MusicLoader.GetMusicSlot(Mod, "Sounds/Music/archaic_vault") : MusicID.Shimmer;
+			music = ModContent.GetInstance<Gameplay>().CustomMusic ? MusicLoader.GetMusicSlot(Mod, "Sounds/Music/MageLab") : MusicID.Shimmer;
 		}
 
         public override bool IsBiomeActive(Player player)
@@ -246,7 +215,7 @@ namespace Remnants.Biomes
     {
 		public override SceneEffectPriority Priority => SceneEffectPriority.BossHigh;
 
-		public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Bluezone_BC0262_black_project_cinematic_ambience_014");
+		public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Elevator");
 
 		public override bool IsBiomeActive(Player player)
         {
@@ -280,7 +249,7 @@ namespace Remnants.Biomes
 		int music = -1;
 		public override void OnEnter(Player player)
 		{
-			music = ModContent.GetInstance<Gameplay>().CustomMusic ? MusicLoader.GetMusicSlot(Mod, "Sounds/Music/fog") : MusicID.Eerie;
+			music = ModContent.GetInstance<Gameplay>().CustomMusic ? MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Tomb") : MusicID.Eerie;
 		}
         public override bool IsBiomeActive(Player player)
 		{
@@ -303,7 +272,7 @@ namespace Remnants.Biomes
 		int music = -1;
 		public override void OnEnter(Player player)
 		{
-			music = ModContent.GetInstance<Gameplay>().CustomMusic ? MusicLoader.GetMusicSlot(Mod, "Sounds/Music/growth") : MusicID.JungleNight;
+			music = ModContent.GetInstance<Gameplay>().CustomMusic ? MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Growth") : MusicID.JungleNight;
 		}
 		public override bool IsBiomeActive(Player player)
 		{
@@ -328,7 +297,7 @@ namespace Remnants.Biomes
 		int music = -1;
 		public override void OnEnter(Player player)
 		{
-			music = ModContent.GetInstance<Gameplay>().CustomMusic ? MusicLoader.GetMusicSlot(Mod, "Sounds/Music/depthsOfDespair") : MusicID.JungleNight;
+			music = ModContent.GetInstance<Gameplay>().CustomMusic ? MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Garden") : MusicID.JungleNight;
 		}
 		public override bool IsBiomeActive(Player player)
 		{
@@ -351,7 +320,7 @@ namespace Remnants.Biomes
 		int music = -1;
         public override void OnEnter(Player player)
 		{
-			music = ModContent.GetInstance<Gameplay>().CustomMusic ? MusicLoader.GetMusicSlot(Mod, "Sounds/Music/darkambient2b") : MusicID.Eerie;
+			music = ModContent.GetInstance<Gameplay>().CustomMusic ? MusicLoader.GetMusicSlot(Mod, "Sounds/Music/WARD") : MusicID.Eerie;
 		}
 
         public override bool IsBiomeActive(Player player)

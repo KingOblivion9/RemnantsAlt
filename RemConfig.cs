@@ -14,9 +14,11 @@ using System.ComponentModel;
 
 namespace Remnants
 {
-	public class Worldgen : ModConfig
-	{
-		public override ConfigScope Mode => ConfigScope.ServerSide;
+    public class Worldgen : ModConfig
+    {
+        public static Worldgen Instance;
+
+        public override ConfigScope Mode => ConfigScope.ServerSide;
 
         [Header("General")]
 
@@ -46,7 +48,6 @@ namespace Remnants
         [Increment(.25f)]
         [DrawTicks]
         [DefaultValue(1f)]
-        //[BackgroundColor(125, 125, 100)]
         public float TerrainAmplitude;
 
         [DefaultValue(true)]
@@ -55,17 +56,13 @@ namespace Remnants
         [DefaultValue(true)]
         public bool JungleValley;
 
-        [DefaultValue(true)]
-        [BackgroundColor(150, 150, 125)]
-        public bool SunkenSeaRework;
-
         [Header("Structure")]
 
-		[Range(0f, 2f)]
-		[Increment(.25f)]
-		[DrawTicks]
-		[DefaultValue(1f)]
-		public float TrapFrequency;
+        [Range(0f, 2f)]
+        [Increment(.25f)]
+        [DrawTicks]
+        [DefaultValue(1f)]
+        public float TrapFrequency;
 
         [Range(0f, 1f)]
         [Increment(.25f)]
@@ -84,13 +81,53 @@ namespace Remnants
         //[ReloadRequired]
         //public float MeteorRework;
 
-        //[DefaultValue(false)]
-        //[BackgroundColor(150, 150, 125)]
-        //public bool LargerSky;
+        [Header("StructureChanges")]
+
+        [DefaultValue(true)]
+        public bool DoNewTemple;
+
+        [DefaultValue(true)]
+        public bool DoNewDungeon;
+
+        [DefaultValue(false)]
+        public bool DoLivingTrees;
+
+        [Header("CalamityCompatability")]
+
+        [DefaultValue(true)]
+        [BackgroundColor(150, 150, 125)]
+        public bool SunkenSeaRework;
+
+        [DefaultValue(true)]
+        public bool AltPlanetoids;
+
+        [DefaultValue(false)]
+        public bool DoLava;
+
+        [Header("LargerSky")]
+
+        [DefaultValue(true)]
+        [BackgroundColor(192, 54, 64, 192)]
+        public bool SkySafeguard;
+
+        [Range(0, 10000)]
+        [DefaultValue(150)]
+        [BackgroundColor(192, 54, 64, 192)]
+        public int FlatSurfaceRatioIncrease;
+
+        [Range(0, 10000)]
+        [DefaultValue(150)]
+        [BackgroundColor(192, 54, 64, 192)]
+        public int FlatUndergroundRatioIncrease;
+
+        [Range(0, 10000)]
+        [DefaultValue(150)]
+        [BackgroundColor(192, 54, 64, 192)]
+        public int FlatLavaRatioIncrease;
     }
-	public class Gameplay : ModConfig
-	{
-		public override ConfigScope Mode => ConfigScope.ServerSide;
+    public class Gameplay : ModConfig
+    {
+        public override ConfigScope Mode => ConfigScope.ServerSide;
 
         [Header("Functional")]
 
@@ -98,15 +135,15 @@ namespace Remnants
         [BackgroundColor(90, 160, 140)]
         public bool FreedomOfMovement;
 
-		[DefaultValue(true)]
+        [DefaultValue(true)]
         [BackgroundColor(150, 150, 125)]
         public bool EnemyAI;
 
-		[DefaultValue(false)]
+        [DefaultValue(false)]
         [BackgroundColor(150, 100, 125)]
         public bool ProjectileAI;
 
-		[DefaultValue(true)]
+        [DefaultValue(true)]
         [BackgroundColor(150, 150, 125)]
         public bool HangingBats;
 

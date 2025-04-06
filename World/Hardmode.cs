@@ -24,13 +24,11 @@ namespace Remnants.World
         public override void ModifyHardmodeTasks(List<GenPass> list)
         {
             RemWorld.RemovePass(list, RemWorld.FindIndex(list, "Hardmode Good Remix"));
+            RemWorld.RemovePass(list, RemWorld.FindIndex(list, "Hardmode Walls"));
+            RemWorld.RemovePass(list, RemWorld.FindIndex(list, "PlentifulOres"));
 
             RemWorld.InsertPass(list, new Blessing("Blessing", 0), RemWorld.FindIndex(list, "Hardmode Good"), true);
             RemWorld.InsertPass(list, new Infection("Infection", 0), RemWorld.FindIndex(list, "Hardmode Evil"), true);
-
-            RemWorld.RemovePass(list, RemWorld.FindIndex(list, "Hardmode Walls"));
-
-            RemWorld.RemovePass(list, RemWorld.FindIndex(list, "PlentifulOres"));
         }
     }
 
