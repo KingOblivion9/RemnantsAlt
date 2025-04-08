@@ -17,12 +17,14 @@ public class Planets : AltPlanetoids
     private ushort[] OreTypes = new ushort[]
     {
         TileID.LunarOre,
-        TileID.ShimmerBlock
+        TileID.ShimmerBlock,
+        (ushort)ModContent.TileType<ExodiumOre>()
     };
     private ushort[] MagmaOreTypes = new ushort[]
     {
         TileID.LunarOre,
-        TileID.Obsidian
+        TileID.Obsidian,
+        (ushort)ModContent.TileType<ExodiumOre>()
     };
 
     public override bool Place(Point origin, StructureMap structures)
@@ -71,11 +73,22 @@ public class Planets : AltPlanetoids
 
         crust.Subtract(core, origin, origin);
 
-        WorldUtils.Gen(origin, new ModShapes.All(core), Actions.Chain(new GenAction[]
+        if (!PlanetConfig.DoLava)
         {
-                new Actions.PlaceTile(Main.getGoodWorld ? TileID.WoodenSpikes : (ushort)ModContent.TileType<ExodiumOre>()),
-                new Actions.PlaceWall(WallID.ShimmerBlockWall)
-        }));
+            WorldUtils.Gen(origin, new ModShapes.All(core), Actions.Chain(new GenAction[]
+            {
+             new Actions.PlaceTile(Main.getGoodWorld ? TileID.WoodenSpikes : _random.Next(OreTypes)),
+             new Actions.PlaceWall(WallID.ShimmerBlockWall)
+            }));
+        }
+        else
+        {
+            WorldUtils.Gen(origin, new ModShapes.All(core), Actions.Chain(new GenAction[]
+            {
+             new Actions.PlaceTile(Main.getGoodWorld ? TileID.WoodenSpikes : _random.Next(MagmaOreTypes)),
+             new Actions.PlaceWall(WallID.ShimmerBlockWall)
+            }));
+        }
         WorldUtils.Gen(origin, new ModShapes.All(crust), Actions.Chain(new GenAction[]
         {
                 new Actions.PlaceTile(TileID.Meteorite),
@@ -84,6 +97,8 @@ public class Planets : AltPlanetoids
 
         int randDirt = (int)(radius * 0.4f);
         int randStone = (int)(randDirt * 0.6f);
+
+        //Generate ore patches
         for (int i = 0; i < randStone; i++)
         {
             int x = origin.X;
@@ -95,6 +110,7 @@ public class Planets : AltPlanetoids
             }
             WorldGen.TileRunner(x, y, _random.NextFloat(4.6f, 7.6f), _random.Next(7, 16), Main.getGoodWorld ? TileID.WoodenSpikes : (ushort)ModContent.TileType<ExodiumOre>());
         }
+        //Generate meteorite patches
         for (int i = 0; i < randDirt; i++)
         {
             int x = _random.Next(origin.X - outerRadius, origin.X + outerRadius + 1);
@@ -134,6 +150,7 @@ public class Planets : AltPlanetoids
             }
         }
 
+        //Orb Geode Shape
         if (Varient == 2)
         {
             if (!PlanetConfig.DoLava)
@@ -170,6 +187,7 @@ public class Planets : AltPlanetoids
             }
         }
 
+        //Hive Geode Shape
         if (Varient == 3 && radius <= 17)
         {
             if (!PlanetConfig.DoLava)

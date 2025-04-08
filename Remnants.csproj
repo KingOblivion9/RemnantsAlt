@@ -10,7 +10,7 @@
       <HintPath>..\..\ModReader\CalamityMod\CalamityMod.dll</HintPath>
     </Reference>
     <Reference Include="StructureHelper">
-      <HintPath>lib\StructureHelper.dll</HintPath>
+      <HintPath>..\..\ModReader\StructureHelper\StructureHelper.dll</HintPath>
     </Reference>
     <Reference Include="SubworldLibrary">
       <HintPath>lib\SubworldLibrary.dll</HintPath>

@@ -33,6 +33,7 @@ using Remnants.Walls.Vanity;
 using Terraria.Chat;
 using Terraria.Localization;
 using System.Reflection;
+using Remnants.World.AltPlanetoids;
 
 namespace Remnants.World
 {
@@ -500,8 +501,6 @@ namespace Remnants.World
             RemovePass(tasks, FindIndex(tasks, "Ocean Sand"));
             RemovePass(tasks, FindIndex(tasks, "Create Ocean Caves"));
 
-            RemovePass(tasks, FindIndex(tasks, "Spider Caves"));
-
             RemovePass(tasks, FindIndex(tasks, "Floating Islands"));
             RemovePass(tasks, FindIndex(tasks, "Floating Island Houses"));
             #endregion
@@ -521,13 +520,16 @@ namespace Remnants.World
             {
                 InsertPass(tasks, new FloatingIslands("Sky Islands", 1), genIndex + 1);
                 InsertPass(tasks, new AerialGarden("Aerial Garden", 100), genIndex + 1);
+
                 InsertPass(tasks, new Undergrowth("Undergrowth", 100), genIndex + 1);
                 if (!StructureConfig.DoLivingTrees)
                 {
                     RemovePass(tasks, FindIndex(tasks, "Living Trees"));
                     RemovePass(tasks, FindIndex(tasks, "Wood Tree Walls"));
                 }
+
                 InsertPass(tasks, new ForgottenTomb("Forgotten Tomb", 100), genIndex + 1);
+                RemovePass(tasks, FindIndex(tasks, "Spider Caves"));
 
                 if (ModContent.GetInstance<Worldgen>().ExperimentalWorldgen)
                 {
@@ -601,6 +603,12 @@ namespace Remnants.World
                 if (ModContent.GetInstance<Worldgen>().SunkenSeaRework)
                 {
                     RemovePass(tasks, FindIndex(tasks, "Sunken Sea"));
+                }
+
+                if (ModContent.GetInstance<Worldgen>().AltPlanetoids)
+                {
+                    RemovePass(tasks, FindIndex(tasks, "Planetoids"));
+                    tasks.Insert(tasks.FindIndex(genpass => genpass.Name.Equals("Dungeon")) + 1, new PassLegacy("Planetoids", AltPlanetoids.AltPlanetoids.GenerateNewPlanetoids));
                 }
 
                 RemovePass(tasks, FindIndex(tasks, "Giant Hive"));

@@ -3678,7 +3678,7 @@ namespace Remnants.World
             progressCounter++;
 
             structureCount = 0; // CACHE
-            while (structureCount < (Main.maxTilesX) / 84)
+            while (structureCount < (Main.maxTilesX) / 84 * ModContent.GetInstance<Worldgen>().CacheFrequency)
             {
                 progress.Set((progressCounter + (structureCount / (float)(Main.maxTilesY / 84))) / (float)uniqueStructures);
 

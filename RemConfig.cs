@@ -74,6 +74,12 @@ namespace Remnants
         [Increment(.25f)]
         [DrawTicks]
         [DefaultValue(1f)]
+        public float CacheFrequency;
+
+        [Range(0f, 1f)]
+        [Increment(.25f)]
+        [DrawTicks]
+        [DefaultValue(1f)]
         public float RailroadFrequency;
 
         //[DefaultValue(true)]
@@ -101,7 +107,7 @@ namespace Remnants
         [DefaultValue(true)]
         public bool AltPlanetoids;
 
-        [DefaultValue(false)]
+        [DefaultValue(true)]
         public bool DoLava;
 
         [Header("LargerSky")]
